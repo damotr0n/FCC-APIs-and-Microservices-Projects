@@ -2,16 +2,15 @@
 
 <html>
    <head>
-      <title>Timestamp Microservice | freeCodeCamp.org</title>
+      <title>APIs and Microservices Projects | freeCodeCamp.org</title>
       <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon"/>
       <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
       <link href="style.css" rel="stylesheet" type="text/css">
    </head>
 
    <body>
-    <h1>Timestamp Microservice</h1>
-    <hr />
     <div class="container">
+      <h1>Timestamp Microservice</h1>
       <h3>Example Usage:</h3>
       <ul>
         <li><a href="api/timestamp/2015-12-25">[project url]/api/timestamp/2015-12-25</a></li>
@@ -25,10 +24,11 @@
       <p>
         <code>{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
       </p>
+      <hr />
     </div>
 
+    <div class="containter">
     <h1>URL Shortener Microservice</h1>
-    <main>
       <section>
         <form action="api/shorturl/new" method="POST">
           <fieldset>
@@ -39,11 +39,30 @@
           </fieldset>
         </form>
       </section>
-    </main>
-    <div class="footer">
-      <p>
-        By <a href="https://www.freecodecamp.org/">freeCodeCamp.org</a>
-      </p>
+      <hr />
+    </div>
+
+    <div class="container">
+      <h1>Exercise tracker</h1>
+      <form action="/api/exercise/new-user" method="post">
+        <h3>Create a New User</h3>
+        <p><code>POST /api/exercise/new-user</code></p>
+        <input id="uname" type="text" name="username" placeholder="username">
+        <input type="submit" value="Submit">
+      </form>
+      <form action="/api/exercise/add" method="post">
+        <h3>Add exercises</h3>
+        <p><code>POST /api/exercise/add</code></p>
+        <input id="uid" type="text" name="userId" placeholder="userId*">
+        <input id="desc" type="text" name="description" placeholder="description*">
+        <input id="dur" type="text" name="duration" placeholder="duration* (mins.)">
+        <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)">
+        <input type="submit" value="Submit">
+      </form>
+      <p><strong>GET users's exercise log: </strong><code>GET /api/exercise/log?{userId}[&amp;from][&amp;to][&amp;limit]</code></p>
+      <p><strong>{ }</strong> = required, <strong>[ ]</strong> = optional</p>
+      <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
+      <hr />
     </div>
   </body>
 </html>
