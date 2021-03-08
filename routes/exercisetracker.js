@@ -17,7 +17,7 @@ router.get("/users", function (req, res) {
   //       as array of objects {username, _id}
 })
 
-router.post("/add"), function (req, res) {
+router.post("/add", function (req, res) {
   var [_id, desc, duration, ...date] = req.body.userId;
 
   // TODO: add exercise
