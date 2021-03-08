@@ -48,6 +48,12 @@ var urlshortener = require("./routes/urlshortener")
 app.use("/api/shorturl", urlshortener)
 // --------------------------------------
 
+// --------------------------------------
+// Exercise Tracker
+var exercisetracker = require("./routes/exercisetracker")
+app.use("/api/exercise", exercisetracker)
+// --------------------------------------
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
