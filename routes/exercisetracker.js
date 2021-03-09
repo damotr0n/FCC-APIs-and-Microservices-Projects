@@ -1,14 +1,44 @@
 // --------------------------------------
 // Exercise Tracker
 
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
+const mongoose = require('mongoose');
 
-router.post("/new-user", function (req, res) {
+
+// --------------------------------------
+// Mongoose setup
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true }
+})
+
+const User = mongoose.model("User", userSchema)
+
+// --------------------------------------
+
+router.post("/new-user", async (req, res) => {
+  
   var username = req.body.username;
+  var newUser = new User({
+    username: username
+  });
+  
+  try {
+  
+    var data = await newUser.save()
 
-  //TODO: add username
-  //      return ID
+    res.json({
+      username: username,
+      _id: data._id
+    })
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 
 })
 
