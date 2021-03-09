@@ -42,13 +42,23 @@ router.post("/new-user", async (req, res) => {
 
 })
 
-router.get("/users", function (req, res) {
-  // TODO: return all usernames
-  //       as array of objects {username, _id}
+router.get("/users", async (req, res) => {
+  
+  try {
+    
+    var data = await User.find();
+
+    res.json(data)
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+
 })
 
 router.post("/add", function (req, res) {
-  var [_id, desc, duration, ...date] = req.body.userId;
+  var [userId, description, duration, date] = [...Object.values(req.body)];
 
   // TODO: add exercise
 })
