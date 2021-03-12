@@ -5,7 +5,6 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose');
 
-
 // --------------------------------------
 // Mongoose setup
 
@@ -14,12 +13,24 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true }
 })
-
 const User = mongoose.model("User", userSchema)
+
+const exerciseSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  description: String,
+  duration: Number,
+  date: Date
+})
+const Exercise = mongoose.model("Exercise", exerciseSchema)
 
 // --------------------------------------
 
 router.post("/new-user", async (req, res) => {
+
+  console.log("-------------")
+  console.log("-----NEW-----")
+  console.log("Request:")
+  console.log(req.body)
   
   var username = req.body.username;
   var newUser = new User({
@@ -30,10 +41,15 @@ router.post("/new-user", async (req, res) => {
   
     var data = await newUser.save()
 
-    res.json({
+    const resJson = {
       username: username,
       _id: data._id
-    })
+    }
+
+    console.log("Response:")
+    console.log(resJson);
+
+    res.json(resJson)
 
   } catch (err) {
     console.log(err);
@@ -45,9 +61,8 @@ router.post("/new-user", async (req, res) => {
 router.get("/users", async (req, res) => {
   
   try {
-    
-    var data = await User.find();
 
+    var data = await User.find();
     res.json(data)
 
   } catch (err) {
@@ -57,10 +72,50 @@ router.get("/users", async (req, res) => {
 
 })
 
-router.post("/add", function (req, res) {
+router.post("/add", async (req, res) => {
   var [userId, description, duration, date] = [...Object.values(req.body)];
 
-  // TODO: add exercise
+  console.log("-------------")
+  console.log("-----ADD-----")
+  console.log("Request:")
+  console.log(req.body)
+
+  if (!date) {
+    date = new Date()
+  } else {
+    date = new Date(date)
+  }
+
+  var newExercise = new Exercise({
+    userId: userId,
+    description: description,
+    duration: duration,
+    date: date
+  })
+
+  try {
+
+    var user = await User.findOne({_id: userId})
+    await newExercise.save()
+
+    const resJson = {
+      username: user.username,
+      description: description,
+      duration: parseInt(duration),
+      _id: userId,
+      date: date.toString().slice(0, 15)
+    };
+
+    console.log("Response:")
+    console.log(resJson);
+
+    res.json(resJson)
+
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+
 })
   
 router.get("/log", function (req, res) {
