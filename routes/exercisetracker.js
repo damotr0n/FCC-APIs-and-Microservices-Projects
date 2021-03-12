@@ -73,12 +73,12 @@ router.get("/users", async (req, res) => {
 })
 
 router.post("/add", async (req, res) => {
-  var [userId, description, duration, date] = [...Object.values(req.body)];
-
   console.log("-------------")
   console.log("-----ADD-----")
   console.log("Request:")
   console.log(req.body)
+
+  var [userId, description, duration, date] = [...Object.values(req.body)];
 
   if (!date) {
     date = new Date()
@@ -118,8 +118,21 @@ router.post("/add", async (req, res) => {
 
 })
   
-router.get("/log", function (req, res) {
-  // TODO: get full exectice log
+router.get("/log", await (req, res) => {
+  console.log("-------------")
+  console.log("-----ADD-----")
+  console.log("Request:")
+  console.log(req.body)
+
+  var [userId, fromDate, toDate, limit] = [...Object.values(req.body)]
+
+  try {
+
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+
 })
 
 module.exports = router
