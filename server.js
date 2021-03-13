@@ -54,6 +54,12 @@ var exercisetracker = require("./routes/exercisetracker")
 app.use("/api/exercise", exercisetracker)
 // --------------------------------------
 
+// --------------------------------------
+// File Metadata
+var filemetadada = require("./routes/filemedatada")
+app.use("/api/", filemetadada)
+// --------------------------------------
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);

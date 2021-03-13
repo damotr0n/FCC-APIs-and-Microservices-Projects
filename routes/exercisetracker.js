@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 // --------------------------------------
 // Mongoose setup
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URI_EXERCISE_TRACKER, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true }
