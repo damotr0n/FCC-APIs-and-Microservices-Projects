@@ -56,8 +56,8 @@ app.use("/api/exercise", exercisetracker)
 
 // --------------------------------------
 // File Metadata
-var filemetadada = require("./routes/filemedatada")
-app.use("/api/", filemetadada)
+var filemetadada = require("./routes/filemetadata")
+app.use("/api/fileanalyse", filemetadada)
 // --------------------------------------
 
 // listen for requests :)

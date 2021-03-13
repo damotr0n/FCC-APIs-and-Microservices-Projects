@@ -3,25 +3,25 @@
 
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose');
+const mongooseExerciseTracker = require('mongoose');
 
 // --------------------------------------
 // Mongoose setup
 
-mongoose.connect(process.env.MONGO_URI_EXERCISE_TRACKER, { useNewUrlParser: true, useUnifiedTopology: true });
+mongooseExerciseTracker.connect(process.env.MONGO_URI_EXERCISE_TRACKER, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongooseExerciseTracker.Schema({
   username: { type: String, required: true }
 })
-const User = mongoose.model("User", userSchema)
+const User = mongooseExerciseTracker.model("User", userSchema)
 
-const exerciseSchema = new mongoose.Schema({
+const exerciseSchema = new mongooseExerciseTracker.Schema({
   userId: { type: String, required: true },
   description: String,
   duration: Number,
   date: Date
 })
-const Exercise = mongoose.model("Exercise", exerciseSchema)
+const Exercise = mongooseExerciseTracker.model("Exercise", exerciseSchema)
 
 // --------------------------------------
 
