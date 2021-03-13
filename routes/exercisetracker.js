@@ -118,15 +118,49 @@ router.post("/add", async (req, res) => {
 
 })
   
-router.get("/log", await (req, res) => {
+router.get("/log", async (req, res) => {
   console.log("-------------")
-  console.log("-----ADD-----")
+  console.log("-----LOG-----")
   console.log("Request:")
-  console.log(req.body)
+  console.log(req.query)
 
-  var [userId, fromDate, toDate, limit] = [...Object.values(req.body)]
+  var queryParams = {userId: req.query.userId}
+
+  if(req.query.from && req.query.to){
+    queryParams.date = {$gte: req.query.from, $lte: req.query.to}
+  }
+
+  console.log(queryParams)
 
   try {
+
+    var query = Exercise.find(queryParams)
+
+    query.select({
+      "_id": 0,
+      "userId": 0,
+      "__v": 0
+    })
+
+    if(req.query.limit){
+      query.limit(parseInt(req.query.limit))
+    }
+
+    var data = await query.exec()
+
+    var user = await User.findOne({_id: req.query.userId})
+
+    var resJson = {
+      username: user.username,
+      _id: req.query.userId,
+      log: data,
+      count: data.length
+    }
+
+    console.log("Response:")
+    console.log(resJson)
+
+    res.json(resJson)
 
   } catch (err) {
     console.log(err)
